@@ -1,0 +1,7 @@
+boto3
+pytest
+requests
+streamlit
+allure-pytest
+pytest-html
+python-dotenv
