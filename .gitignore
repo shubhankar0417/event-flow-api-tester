@@ -1,6 +1,6 @@
 # Ignore below files and directories
 .pytest_cache
-reports/
+reports/*
 venv-eventflow-api/
 .env
 *.pyc

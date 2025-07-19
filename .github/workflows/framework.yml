@@ -22,20 +22,29 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pytest pytest-html allure-pytest
+        pip install pytest-html allure-pytest
 
     - name: Run Pytest with HTML & Allure Report
       run: |
+        mkdir -p reports/pytest-html-reports
+        mkdir -p reports/allure-reports
         pytest tests/ --html=reports/report.html --self-contained-html --alluredir=reports/allure-reports
 
-    - name: Upload HTML report
-      uses: actions/upload-artifact@v4
-      with:
-        name: html-report
-        path: reports/report.html
+    - name: Generate Allure report
+      run: |
+        npm install -g allure-commandline --save-dev
+        allure generate reports/allure-reports -o reports/allure-reports/html --clean
 
-    - name: Allure Report Results
+    - name: Upload HTML report artifact
+      if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: allure-results
-        path: reports/allure-results
+        name: pytest-html-report
+        path: reports/pytest-html-reports/html-report.html
+
+    - name: Upload Allure HTML report artifact
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-html-report
+        path: reports/allure-reports/html/
