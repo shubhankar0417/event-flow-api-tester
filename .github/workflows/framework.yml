@@ -24,18 +24,18 @@ jobs:
         pip install -r requirements.txt
         pip install pytest pytest-html allure-pytest
 
-    - name: Run Pytest with HTML Report
+    - name: Run Pytest with HTML & Allure Report
       run: |
-        pytest tests/ --html=report/report.html --self-contained-html
+        pytest tests/ --html=reports/report.html --self-contained-html --alluredir=reports/allure-reports
 
     - name: Upload HTML report
       uses: actions/upload-artifact@v4
       with:
         name: html-report
-        path: report/report.html
+        path: reports/report.html
 
     - name: Allure Report Results
       uses: actions/upload-artifact@v4
       with:
         name: allure-results
-        path: report/allure-results
+        path: reports/allure-results
