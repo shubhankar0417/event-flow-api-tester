@@ -28,7 +28,7 @@ jobs:
       run: |
         mkdir -p reports/pytest-html-reports
         mkdir -p reports/allure-reports
-        pytest tests/ --html=reports/report.html --self-contained-html --alluredir=reports/allure-reports
+        pytest tests/ --html=reports/pytest-html-reports/report.html --self-contained-html --alluredir=reports/allure-reports/
 
     - name: Generate Allure report
       run: |
