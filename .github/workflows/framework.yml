@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -28,9 +28,12 @@ jobs:
       run: |
         mkdir -p reports/pytest-html-reports
         mkdir -p reports/allure-reports
-        pytest tests/ --html=reports/pytest-html-reports/report.html --self-contained-html --alluredir=reports/allure-reports/
+        pytest tests/test_sample.py \
+          --html=reports/pytest-html-reports/html-report.html \
+          --self-contained-html \
+          --alluredir=reports/allure-reports
 
-    - name: Generate Allure report
+    - name: Generate Allure HTML report
       run: |
         npm install -g allure-commandline --save-dev
         allure generate reports/allure-reports -o reports/allure-reports/html --clean
@@ -47,4 +50,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: allure-html-report
-        path: reports/allure-reports/html/
+        path: reports/allure-reports/html
