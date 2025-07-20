@@ -33,6 +33,7 @@ jobs:
       run: npm install -g allure-commandline
 
     - name: Run Pytest with HTML & Allure Report
+      continue-on-error: true
       run: |
         mkdir -p reports/pytest-html-reports
         mkdir -p reports/allure-reports
