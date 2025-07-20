@@ -47,11 +47,6 @@ jobs:
         npm install -g allure-commandline --save-dev
         allure generate reports/allure-reports -o reports/allure-reports/html --clean
 
-    - name: Debug report folders
-      run: |
-        echo "== REPORTS DIRECTORY =="
-        ls -R reports
-
     - name: Upload HTML report artifact
       if: always()
       uses: actions/upload-artifact@v4
@@ -73,5 +68,5 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./reports/allure-reports/html
         publish_branch: gh-pages
-        destination_dir: allure-report
+        destination_dir: .
 
