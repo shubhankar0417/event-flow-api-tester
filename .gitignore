@@ -1,6 +1,8 @@
 # Ignore below files and directories
 .pytest_cache
-reports/*
+reports/allure-reports/*
+reports/pytest-html-reports/*
+reports/allure-html/*
 venv-eventflow-api/
 .env
 *.pyc
