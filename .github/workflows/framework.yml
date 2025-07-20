@@ -23,6 +23,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest-html allure-pytest
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    
+    - name: Install Allure CLI
+      run: npm install -g allure-commandline
 
     - name: Run Pytest with HTML & Allure Report
       run: |
@@ -37,6 +45,11 @@ jobs:
       run: |
         npm install -g allure-commandline --save-dev
         allure generate reports/allure-reports -o reports/allure-reports/html --clean
+
+    - name: Debug report folders
+      run: |
+        echo "== REPORTS DIRECTORY =="
+        ls -R reports
 
     - name: Upload HTML report artifact
       if: always()
