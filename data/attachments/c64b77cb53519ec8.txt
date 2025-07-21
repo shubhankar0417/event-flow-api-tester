@@ -1,0 +1,2 @@
+1. Success - GET API PASSED
+2. Success - SQS MESSAGE PASSED
