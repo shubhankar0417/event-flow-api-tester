@@ -1,5 +1,6 @@
 # Ignore below files and directories
 .pytest_cache
+__pycache__
 reports/allure-reports/*
 reports/pytest-html-reports/*
 reports/allure-html/*

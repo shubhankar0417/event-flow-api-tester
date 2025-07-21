@@ -9,6 +9,20 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_REGION_NAME: ${{ secrets.AWS_REGION_NAME }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+      CATEGORY: ${{ secrets.CATEGORY }}
+      GUARDIAN_API_KEY: ${{ secrets.GUARDIAN_API_KEY }}
+      GUARDIAN_API_URL: ${{ secrets.GUARDIAN_API_URL }}
+      LAMBDA_LOG_GROUP: ${{ secrets.LAMBDA_LOG_GROUP }}
+      LAMBDA_SUCCESS_MSG: ${{ secrets.LAMBDA_SUCCESS_MSG }}
+      PREFIX: ${{ secrets.PREFIX }}
+      SQS_QUEUE_NAME: ${{ secrets.SQS_QUEUE_NAME }}
+      SQS_QUEUE_URL: ${{ secrets.SQS_QUEUE_URL }}
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
