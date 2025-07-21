@@ -43,8 +43,8 @@ jobs:
       with:
         node-version: '18'
     
-    - name: Install Allure CLI
-      run: npm install -g allure-commandline
+    #- name: Install Allure CLI
+    #  run: npm install -g allure-commandline
 
     - name: Run Pytest with HTML & Allure Report
       continue-on-error: true
@@ -56,10 +56,16 @@ jobs:
           --self-contained-html \
           --alluredir=reports/allure-reports
 
-    - name: Generate Allure HTML report
-      run: |
-        npm install -g allure-commandline --save-dev
-        allure generate reports/allure-reports -o reports/allure-reports/html --clean
+    - name: Generate Allure Report
+      uses: simple-elf/allure-report-action@v1.8
+      with:
+        allure_results: reports/allure-reports
+        allure_report: reports/allure-reports/html
+        keep_reports: true
+    #- name: Generate Allure HTML report
+    #  run: |
+    #    npm install -g allure-commandline --save-dev
+    #    allure generate reports/allure-reports -o reports/allure-reports/html --clean
 
     - name: Upload HTML report artifact
       if: always()
