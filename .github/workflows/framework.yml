@@ -51,7 +51,7 @@ jobs:
       run: |
         mkdir -p reports/pytest-html-reports
         mkdir -p reports/allure-reports
-        pytest tests/test_sample.py \
+        pytest tests/ \
           --html=reports/pytest-html-reports/html-report.html \
           --self-contained-html \
           --alluredir=reports/allure-reports
