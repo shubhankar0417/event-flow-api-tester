@@ -1,9 +1,10 @@
 import pytest
+import time
 from utils.config import get_config
-from aws_pipeline.data_ingestor.ingest_articles import get_guardian_articles
+from aws_pipeline.guardian.articles import get_guardian_articles
 from aws_pipeline.sqs.sqs_handler import send_message_to_sqs
-from aws_pipeline.lambda_handler.verify_lambda_invoked_by_sqs import get_latest_lambda_log_and_check_successful_processing
-from aws_pipeline.s3_validator.validate_latest_upload import get_latest_file_from_s3
+from aws_pipeline.lambda_aws.lambda_handler import check_lambda_logs_in_cloud_watch
+from aws_pipeline.s3.s3_handler import get_latest_file_from_s3
 
 def test_full_event_flow():
     config = get_config()
@@ -18,7 +19,6 @@ def test_full_event_flow():
     # Send the data to the SQS queue
     message = guardian_api_response.json()
     sqs_response = send_message_to_sqs(message)
-    # print('SQS Response :', sqs_response)
     sqs_response_status = sqs_response['ResponseMetadata']['HTTPStatusCode']
     assert sqs_response_status == 200, (
         f'SQS message sending failed: {sqs_response_status}'
@@ -26,7 +26,8 @@ def test_full_event_flow():
     print('2. Success - SQS MESSAGE PASSED')
 
     # verify lambda is triggered from sqs 
-    lambda_status, sqs_success_message, s3_success_message = get_latest_lambda_log_and_check_successful_processing()
+    time.sleep(10)
+    lambda_status, sqs_success_message, s3_success_message = check_lambda_logs_in_cloud_watch()
     assert lambda_status == True, ('Lambda could not process SQS message properly')
     print('3. Success - LAMBDA FUNCTION PASSED')
 

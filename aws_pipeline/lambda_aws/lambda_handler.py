@@ -2,7 +2,7 @@ import boto3
 from utils.config import get_config
 
 
-def get_latest_lambda_log_and_check_successful_processing():
+def check_lambda_logs_in_cloud_watch():
     config = get_config()
     cloud_watch_client = boto3.client('logs',
                                     region_name=config['AWS_REGION_NAME'],
@@ -16,7 +16,7 @@ def get_latest_lambda_log_and_check_successful_processing():
     )
     # print('Streams :', streams)
     if not streams['logStreams']:
-        return False
+        return False, None, None
     
     stream_name = streams['logStreams'][0]['logStreamName']
 
@@ -28,19 +28,17 @@ def get_latest_lambda_log_and_check_successful_processing():
         startFromHead=False
     )
 
-    # print('Logs :', logs)
     sqs_success_message = None
     s3_success_message = None
-    for event in logs.get('events', []):
-        # print('Events :', event)
+    for event in reversed(logs['events']):
         if config['LAMBDA_SUCCESS_MSG'] in event.get('message'):
             sqs_success_message = event.get('message')
         if 'Successfully uploaded filtered data to s3://' in event.get('message'):
             s3_success_message = event.get('message')
+    
+    print('Found SQS success message :', sqs_success_message)
+    print('Found S3 success message :', s3_success_message)
 
-        """if config['LAMBDA_SUCCESS_MSG'] in event.get("message", ""):
-            print('Lambda success message : ', event['message'])
-            return True"""
     if bool(sqs_success_message and s3_success_message):
         return True, sqs_success_message, s3_success_message    
 
