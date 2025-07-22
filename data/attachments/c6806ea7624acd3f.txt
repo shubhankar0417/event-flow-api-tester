@@ -1,0 +1,7 @@
+1. Success - GET API PASSED
+2. Success - SQS QUEUE PASSED
+Found SQS success message : SQS message processed successfully
+
+Found S3 success message : Successfully uploaded filtered data to s3://lambda-filtered-output-bucket/filtered_data/2025-07-22T09-55-45-956719Z.json
+
+3. Success - LAMBDA FUNCTION PASSED
