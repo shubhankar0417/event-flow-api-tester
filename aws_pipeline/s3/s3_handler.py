@@ -1,7 +1,9 @@
 from utils.config import get_config
 import boto3
 
-def get_latest_file_from_s3():
+def get_latest_file_from_s3(fail_on_purpose=False):
+    if fail_on_purpose:
+        return 'File not found'
     config = get_config()
     s3_client = boto3.client('s3',
                             region_name=config['AWS_REGION_NAME'],

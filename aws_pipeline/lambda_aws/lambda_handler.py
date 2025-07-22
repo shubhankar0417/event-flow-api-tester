@@ -2,7 +2,10 @@ import boto3
 from utils.config import get_config
 
 
-def check_lambda_logs_in_cloud_watch():
+def check_lambda_logs_in_cloud_watch(fail_on_purpose):
+    if fail_on_purpose:
+        return False, None, None 
+    
     config = get_config()
     cloud_watch_client = boto3.client('logs',
                                     region_name=config['AWS_REGION_NAME'],
